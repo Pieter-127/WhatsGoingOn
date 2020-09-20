@@ -14,5 +14,9 @@
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
     <dimen name="text_size_xlarge">24sp</dimen>
+    <dimen name="heading_image_height">200dp</dimen>
+    <dimen name="sub_heading_content_size">180dp</dimen>
+    <dimen name="sub_article_image_width">120dp</dimen>
+    <dimen name="divider_margin_start">50dp</dimen>
 
 </resources>

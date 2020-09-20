@@ -3,15 +3,14 @@ package com.pieterventer.whatsgoingon.ui
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.pieterventer.whatsgoingon.R
 import com.pieterventer.whatsgoingon.data.model.response.NewsItem
-import com.pieterventer.whatsgoingon.util.inflateView
-import com.pieterventer.whatsgoingon.util.toTimeDisplayFormat
+import com.pieterventer.whatsgoingon.ui.NewsAdapter.NewsViewHolder.Companion.HEADLINE
+import com.pieterventer.whatsgoingon.ui.NewsAdapter.NewsViewHolder.Companion.SUB
+import com.pieterventer.whatsgoingon.ui.vh.HeadlineNewsViewHolder
+import com.pieterventer.whatsgoingon.ui.vh.SmallNewsHeadingViewHolder
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.news_item.view.*
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items = arrayListOf<NewsItem>()
         set(value) {
@@ -19,23 +18,31 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
             notifyDataSetChanged()
         }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = items[position]
 
-        val context = holder.containerView.context
-
-        holder.containerView.articleTime.text = item.publishedAt.toTimeDisplayFormat()
-        holder.containerView.articleHeading.text = item.title
-        holder.containerView.author.text = item.author
-        holder.containerView.articleSource.text = item.source.name ?: ""
-
-        Glide.with(context).load(
-            item.urlToImage
-        ).centerCrop().placeholder(R.drawable.placeholder).into(holder.containerView.articleImage)
+        when (holder) {
+            is HeadlineNewsViewHolder -> holder.bind(item)
+            is SmallNewsHeadingViewHolder -> holder.bind(item)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder =
-        NewsViewHolder.inflate(parent)
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> HEADLINE
+            else -> SUB
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            HEADLINE -> HeadlineNewsViewHolder.inflate(parent)
+            SUB -> SmallNewsHeadingViewHolder.inflate(parent)
+
+            else -> SmallNewsHeadingViewHolder.inflate(parent)
+        }
+    }
+
 
     override fun getItemCount(): Int = items.size
 
@@ -43,9 +50,9 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         companion object {
-            fun inflate(parent: ViewGroup):
-                    NewsViewHolder =
-                NewsViewHolder(inflateView(R.layout.news_item, parent, false))
+
+            const val HEADLINE = 1
+            const val SUB = 2
         }
     }
 }

@@ -2,5 +2,6 @@
     <string name="app_name">What\'s Going On</string>
 
     <string name="default_error">An unexpected error occurred, please try again later</string>
+    <string name="news_article_image">news article image</string>
 
 </resources>
