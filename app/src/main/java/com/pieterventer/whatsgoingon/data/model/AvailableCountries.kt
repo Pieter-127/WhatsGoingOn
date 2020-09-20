@@ -1,4 +1,4 @@
-package com.pieterventer.whatsgoingon.data.model.response
+package com.pieterventer.whatsgoingon.data.model
 
 enum class AvailableCountries(val code: String) {
 

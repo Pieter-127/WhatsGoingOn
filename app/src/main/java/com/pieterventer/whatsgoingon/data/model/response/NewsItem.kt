@@ -1,5 +1,6 @@
 package com.pieterventer.whatsgoingon.data.model.response
 
+import com.pieterventer.whatsgoingon.data.model.ArticleSource
 import java.util.*
 
 data class NewsItem(
