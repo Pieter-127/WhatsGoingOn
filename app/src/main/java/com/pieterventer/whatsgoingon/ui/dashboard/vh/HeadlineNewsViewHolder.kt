@@ -1,4 +1,4 @@
-package com.pieterventer.whatsgoingon.ui.vh
+package com.pieterventer.whatsgoingon.ui.dashboard.vh
 
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +15,18 @@ import kotlinx.android.synthetic.main.heading_news_item.view.*
 class HeadlineNewsViewHolder constructor(override val containerView: View) :
     RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    fun bind(newsItem: NewsItem) {
+    fun bind(newsItem: NewsItem, callback: (NewsItem) -> Unit) {
 
         val context = containerView.context
 
         containerView.articleTime.text = newsItem.publishedAt.toTimeDisplayFormat()
         containerView.articleHeading.text = newsItem.title
-        containerView.author.text = newsItem.author
+        containerView.author.text = newsItem.author ?: ""
         containerView.articleSource.text = newsItem.source.name ?: ""
+
+        containerView.setOnClickListener {
+            callback.invoke(newsItem)
+        }
 
         Glide.with(context).load(newsItem.urlToImage).placeholder(R.drawable.placeholder)
             .centerCrop().into(containerView.headingImage)

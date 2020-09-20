@@ -5,7 +5,7 @@ import java.util.*
 
 data class NewsItem(
     val source: ArticleSource,
-    val author: String,
+    val author: String?,
     val title: String,
     val description: String,
     val url: String,

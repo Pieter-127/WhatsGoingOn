@@ -1,4 +1,4 @@
-package com.pieterventer.whatsgoingon.ui
+package com.pieterventer.whatsgoingon.ui.dashboard
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData

@@ -1,18 +1,20 @@
-package com.pieterventer.whatsgoingon.ui
+package com.pieterventer.whatsgoingon.ui.dashboard
 
 import android.animation.Animator
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.LottieDrawable
 import com.google.android.material.snackbar.Snackbar
 import com.pieterventer.whatsgoingon.R
+import com.pieterventer.whatsgoingon.data.model.response.NewsItem
 import com.pieterventer.whatsgoingon.util.hide
 import com.pieterventer.whatsgoingon.util.show
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class DashboardActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<NewsViewModel>()
 
@@ -29,15 +31,15 @@ class MainActivity : AppCompatActivity() {
 
         loadingAnimation.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {
-                viewModel.retrieveLatestNews(this@MainActivity, ::handleApiError)
+                viewModel.retrieveLatestNews(this@DashboardActivity, ::handleApiError)
             }
 
             override fun onAnimationEnd(p0: Animator?) {
                 pullToRefresh.setOnRefreshListener {
-                    viewModel.retrieveLatestNews(this@MainActivity, ::handleApiError)
+                    viewModel.retrieveLatestNews(this@DashboardActivity, ::handleApiError)
                 }
 
-                viewModel.currentLiveNews.observe(this@MainActivity, {
+                viewModel.currentLiveNews.observe(this@DashboardActivity, {
                     it?.let {
                         newsAdapter.items = it
                         pullToRefresh.isRefreshing = false
@@ -67,8 +69,15 @@ class MainActivity : AppCompatActivity() {
         Snackbar.make(pullToRefresh, error, Snackbar.LENGTH_LONG).show()
     }
 
+    private fun handleClickCallback(newsItem: NewsItem) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(newsItem.url)
+
+        startActivity(intent)
+    }
+
     private fun setupNewsAdapter() {
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter(::handleClickCallback)
 
         val manager = LinearLayoutManager(this)
         manager.orientation = LinearLayoutManager.VERTICAL

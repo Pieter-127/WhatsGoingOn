@@ -1,16 +1,17 @@
-package com.pieterventer.whatsgoingon.ui
+package com.pieterventer.whatsgoingon.ui.dashboard
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pieterventer.whatsgoingon.data.model.response.NewsItem
-import com.pieterventer.whatsgoingon.ui.NewsAdapter.NewsViewHolder.Companion.HEADLINE
-import com.pieterventer.whatsgoingon.ui.NewsAdapter.NewsViewHolder.Companion.SUB
-import com.pieterventer.whatsgoingon.ui.vh.HeadlineNewsViewHolder
-import com.pieterventer.whatsgoingon.ui.vh.SmallNewsHeadingViewHolder
+import com.pieterventer.whatsgoingon.ui.dashboard.NewsAdapter.NewsViewHolder.Companion.HEADLINE
+import com.pieterventer.whatsgoingon.ui.dashboard.NewsAdapter.NewsViewHolder.Companion.SUB
+import com.pieterventer.whatsgoingon.ui.dashboard.vh.HeadlineNewsViewHolder
+import com.pieterventer.whatsgoingon.ui.dashboard.vh.SmallNewsHeadingViewHolder
 import kotlinx.android.extensions.LayoutContainer
 
-class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsAdapter(private val callback: (NewsItem) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items = arrayListOf<NewsItem>()
         set(value) {
@@ -22,8 +23,8 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val item = items[position]
 
         when (holder) {
-            is HeadlineNewsViewHolder -> holder.bind(item)
-            is SmallNewsHeadingViewHolder -> holder.bind(item)
+            is HeadlineNewsViewHolder -> holder.bind(item, callback)
+            is SmallNewsHeadingViewHolder -> holder.bind(item, callback)
         }
     }
 
