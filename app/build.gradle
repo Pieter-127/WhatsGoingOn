@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+Properties appProperties = new Properties()
+appProperties.load(new FileInputStream(file("keys")))
+
+def apiKey = appProperties["apiKey"]
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    defaultConfig {
+        applicationId "com.pieterventer.whatsgoingon"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "String", "apiKey", '"' + apiKey + '"'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.const_layout}"
+
+    implementation "androidx.appcompat:appcompat:${versions.support_library}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "androidx.cardview:cardview:${versions.cardView}"
+    implementation "androidx.recyclerview:recyclerview:${versions.recycler}"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.arch_comp}"
+
+    implementation "com.jakewharton.timber:timber:${versions.timber}"
+
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofit}"
+
+    implementation "com.google.code.gson:gson:${versions.gson}"
+
+    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp3}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp3}"
+
+    implementation "org.koin:koin-android:${versions.koin}"
+    implementation "org.koin:koin-androidx-scope:${versions.koin}"
+    implementation "org.koin:koin-androidx-viewmodel:${versions.koin}"
+    implementation "org.koin:koin-androidx-ext:${versions.koin}"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.ktx_lifecycles}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${versions.ktx_lifecycles}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.ktx_lifecycles}"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipe"
+
+    implementation "com.airbnb.android:lottie:$versions.lottie"
+
+    implementation "com.github.bumptech.glide:glide:${versions.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${versions.glide}"
+
+
+}
