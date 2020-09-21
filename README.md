@@ -25,7 +25,7 @@ The app makes use of Kotlin and a few other libraries to create a native android
 
 # How would you run this ? 
 
-You can simply clone this from github and open the project using android studio (the `master` branch is usually where the latest stable build can be found, `dev` is where I work on new features)  there shouldn't be any additional requirements or configurations needed.
+You can simply clone this from github and open the project using android studio (the `master` branch is usually where the latest stable build can be found, `dev` is where I work on new features), you'll need your own api key for making requests with the app as this isn't a free api source, unfortunately
 
 # Attribution
 
