@@ -3,5 +3,9 @@
 
     <string name="default_error">An unexpected error occurred, please try again later</string>
     <string name="news_article_image">news article image</string>
+    <string name="notification_channel_name">Latest news feed</string>
+    <string name="notification_description_text">Notifications for when the latest news becomes available, usually hourly</string>
 
+    <string name="new_notifications_title">New headlines available.</string>
+    <string name="new_notifications_content">Grab a coffee and read some of the latest headlines right now.</string>
 </resources>
